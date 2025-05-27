@@ -9,13 +9,12 @@ const strings = {
     atleast_numeric_character: "Password should have at least a numeric character.",
     atleast_characters: "Password should have at least 8 characters.",
     company_name_isrequired: "Company name is required",
-    email_is_required: "Email is required",
-    password_is_required: "Password is required",
     name_isrequired: "Name is required",
     phone_isrequired: "Phone is required",
     password_not_matched: "Passwords did not match",
     login_error:"Login Error",
-    incorrect_password:"Incorrect username or password."
+    incorrect_password:"Incorrect username or password.",
+    unregistered_user:"Username/client id combination not found."
 };
 
 export default strings;

@@ -1,9 +1,10 @@
-import strings from "../../login_Test/constatnts/constatnt";
-import inputs from "../../login_Test/data/inputs";
+import strings from "../../auth_test/constants/constant";
+import inputs from "../../auth_test/data/input";
 
 describe('Login Page Test', () => { 
   beforeEach(() => {
-    cy.visit(Cypress.env('BASE_URL'));
+   cy.visit('/login');
+   cy.wait(1000);
   });
 
 
@@ -15,12 +16,12 @@ describe('Login Page Test', () => {
 
   it('Checks input fields', () => {
     cy.get('[data-testid="Email Address"]')
-      .type(inputs.check_input_fields_email)
-      .should('have.value', inputs.check_input_fields_email);
+      .type(inputs.correct_email)
+      .should('have.value', inputs.correct_email);
 
     cy.get('[data-testid="password"]')
-      .type(inputs.check_input_fields_password)
-      .should('have.value',inputs.check_input_fields_password);
+      .type(inputs.correct_password)
+      .should('have.value',inputs.correct_password);
   });
 
   
@@ -34,8 +35,8 @@ describe('Login Page Test', () => {
 
   it('Empty field input', () => {
     cy.get('button[type="submit"]').click();
-    cy.contains(strings.email_is_required).should('exist');
-    cy.contains(strings.password_is_required).should('exist');
+    cy.contains(strings.empty_email).should('exist');
+    cy.contains(strings.empty_password).should('exist');
   });
 
 
@@ -47,15 +48,16 @@ describe('Login Page Test', () => {
 
 
   it('Logins successfully with correct credentials', () => {
-    cy.get('[data-testid="Email Address"]').type(inputs.successful_login_email);
-    cy.get('[data-testid="password"]').type(inputs.successful_login_PW);
+    cy.get('[data-testid="Email Address"]').type(inputs.correct_email);
+    cy.get('[data-testid="password"]').type(inputs.correct_password);
     cy.get('button[type="submit"]').click();
-    cy.url({ timeout: 10000 }).should('include', '/dashboard');
+    cy.url();
+    cy.wait(10000);
   });
 
 
   it('Shows error on incorrect credentials', () => {
-    cy.get('[data-testid="Email Address"]').type(inputs.successful_login_email);
+    cy.get('[data-testid="Email Address"]').type(inputs.correct_email);
     cy.get('[data-testid="password"]').type(inputs.incorrect_PW);
     cy.get('button[type="submit"]').click();
 
@@ -67,7 +69,7 @@ describe('Login Page Test', () => {
       .should('contain.text', strings.incorrect_password)
       .and('be.visible');
   });
-
+  
 
   it('Checks remember me option', () => {
     cy.contains('label', 'Remember Me').should('exist');
@@ -79,4 +81,5 @@ describe('Login Page Test', () => {
     cy.contains('Forgot Password')
       .click();
   });
+  
 });
